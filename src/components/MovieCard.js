@@ -1,0 +1,54 @@
+import React from "react";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Paper,
+  ThemeProvider,
+  Typography,
+  createTheme,
+} from "@mui/material";
+import { grey, purple } from "@mui/material/colors";
+import ImagePlaceholder from "./ImagePlaceholder";
+import { useTheme } from "@emotion/react";
+
+const MovieCard = ({ movie, onClick, handleAddtoList }) => {
+  const theme = useTheme();
+
+  return (
+    <div>
+      {/* <ThemeProvider theme={theme}> */}
+      <Paper elevation={8}>
+        <div onClick={onClick}>
+          <Card>
+            {movie.poster || movie.Poster ? (
+              <CardMedia
+                component="img"
+                height="240"
+                image={movie.Poster || movie.poster}
+                alt={movie.Title || movie.title}
+              />
+            ) : (
+              <ImagePlaceholder />
+            )}
+            <CardContent>
+              <Typography gutterBottom variant="h6" component="div">
+                {movie.Title || movie.title}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                {movie.Year || movie.year}
+              </Typography>
+            </CardContent>
+          </Card>
+        </div>
+        <Button variant="contained" onClick={handleAddtoList}>
+          Add to playlist
+        </Button>
+      </Paper>
+      {/* </ThemeProvider> */}
+    </div>
+  );
+};
+
+export default MovieCard;

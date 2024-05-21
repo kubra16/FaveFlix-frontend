@@ -1,0 +1,15 @@
+
+.navbar {
+  background-color: inherit;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  margin-left: 1rem;
+}
