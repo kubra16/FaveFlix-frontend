@@ -2,6 +2,8 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Register = () => {
   const [email, setEmail] = useState({ value: "", error: null });
@@ -47,12 +49,13 @@ const Register = () => {
         },
       };
       const { data } = await axios.post(
-        "http://localhost:5000/api/users",
+        `${BASE_URL}api/users`,
         { name: name.value, email: email.value, password: password.value },
         config
       );
       localStorage.setItem("userInfo", JSON.stringify(data));
-      history.push("/home");
+      history("/home");
+      toast.success("User created successfully");
     } catch (err) {
       console.log(err);
     }
