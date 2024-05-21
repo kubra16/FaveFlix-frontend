@@ -6,6 +6,7 @@ import axios from "axios";
 import MovieModal from "../components/MovieModal";
 import { UserState } from "../Context/UserProvider";
 import CreatePlayListModal from "../components/CreatePlayListModal";
+import { toast } from "react-toastify";
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const Home = () => {
@@ -18,7 +19,6 @@ const Home = () => {
     playList,
     setPlaylist,
   } = UserState();
-  console.log(user?.token);
   const [movies, setMovies] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
@@ -102,13 +102,17 @@ const Home = () => {
         FormData,
         config
       );
+      toast.success("Created new playlist!");
       setPlayListName("");
-      handleAddtoList();
+      setCreateModal(false);
+      // handleAddtoList();
     } catch (err) {
       console.log(err);
     }
   };
   const handleMoviesToPlaylist = async (playlistId, movie) => {
+    setSelectedMovie(movie);
+    // console.log(movie, "here");
     try {
       const config = {
         headers: {
@@ -124,6 +128,7 @@ const Home = () => {
       const response = await axios
         .post(`${BASE_URL}api/playlist/${playlistId}/movies`, newMovie, config)
         .then((response) => setCreateModal(false));
+      toast.success("Added movie to your playlist!");
     } catch (err) {
       console.log(err);
     }

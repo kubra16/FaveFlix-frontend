@@ -8,17 +8,20 @@ import {
 } from "@mui/material";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Styles.module.css";
 import ThemeToggleButton from "./ThemeToggleButton";
 import { UserState } from "../Context/UserProvider";
 
 const Navbar = ({ themeMode, toggleTheme }) => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const { setUser } = UserState();
   const logout = () => {
     localStorage.removeItem("userInfo");
     setUser(null);
+    navigate("/");
+    window.location.reload();
   };
   return (
     <AppBar position="fixed" className={styles.navbar}>

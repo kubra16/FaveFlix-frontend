@@ -12,13 +12,15 @@ import {
 import { grey, purple } from "@mui/material/colors";
 import ImagePlaceholder from "./ImagePlaceholder";
 import { useTheme } from "@emotion/react";
+import { UserState } from "../Context/UserProvider";
 
-const MovieCard = ({ movie, onClick, handleAddtoList }) => {
+const MovieCard = ({ isPlaylist, movie, onClick, handleAddtoList }) => {
   const theme = useTheme();
+  const { user } = UserState();
+  console.log(user);
 
   return (
     <div>
-      {/* <ThemeProvider theme={theme}> */}
       <Paper elevation={8}>
         <div onClick={onClick}>
           <Card>
@@ -42,11 +44,12 @@ const MovieCard = ({ movie, onClick, handleAddtoList }) => {
             </CardContent>
           </Card>
         </div>
-        <Button variant="contained" onClick={handleAddtoList}>
-          Add to playlist
-        </Button>
+        {!isPlaylist && (
+          <Button variant="contained" onClick={handleAddtoList}>
+            Add to playlist
+          </Button>
+        )}
       </Paper>
-      {/* </ThemeProvider> */}
     </div>
   );
 };

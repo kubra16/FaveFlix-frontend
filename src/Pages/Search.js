@@ -57,6 +57,7 @@ const Search = () => {
   };
 
   const handleAddtoList = async (movie) => {
+    console.log(movie, "movie");
     setSelectedMovie(movie);
     setCreateModal(true);
     try {
