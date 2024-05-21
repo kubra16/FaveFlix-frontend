@@ -19,6 +19,7 @@ const Playlist = () => {
     playList,
     setPlaylist,
   } = UserState();
+
   const useStyles = makeStyles((theme) => ({
     container: {
       padding: theme.spacing(2),

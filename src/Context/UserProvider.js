@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
   const [playlistName, setPlayListName] = useState("");
   const [isCreateModal, setCreateModal] = useState(false);
   const [playList, setPlaylist] = useState([]);
@@ -11,8 +11,8 @@ const UserProvider = ({ children }) => {
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     setUser(userInfo);
-    // if (!userInfo) navigate("/");
-  }, []);
+    if (userInfo) navigate();
+  }, [navigate]);
   return (
     <UserContext.Provider
       value={{
