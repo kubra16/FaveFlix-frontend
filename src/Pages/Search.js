@@ -23,7 +23,7 @@ const Search = () => {
   const handleOpenModal = async (movie) => {
     try {
       const response = await axios.get(
-        `http://www.omdbapi.com/?i=${movie.imdbID}&apikey=${API_KEY}&plot=full`
+        `https://www.omdbapi.com/?i=${movie.imdbID}&apikey=${API_KEY}&plot=full`
       );
       const detailedMovie = {
         ...movie,
@@ -40,7 +40,7 @@ const Search = () => {
   const handleSearchMovie = async () => {
     try {
       const response = await axios.get(
-        `http://www.omdbapi.com/?s=${search}&apikey=${API_KEY}`
+        `https://www.omdbapi.com/?s=${search}&apikey=${API_KEY}`
       );
       setSearchMovies(response.data.Search || []);
     } catch (err) {

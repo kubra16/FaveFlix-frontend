@@ -41,7 +41,7 @@ const Home = () => {
   const handleOpenModal = async (movie) => {
     try {
       const response = await axios.get(
-        `http://www.omdbapi.com/?i=${movie.imdbID}&apikey=${API_KEY}&plot=full`
+        `https://www.omdbapi.com/?i=${movie.imdbID}&apikey=${API_KEY}&plot=full`
       );
       const detailedMovie = {
         ...movie,
