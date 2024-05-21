@@ -27,7 +27,7 @@ const Home = () => {
     const fetchMovies = async () => {
       try {
         const response = await axios.get(
-          `http://www.omdbapi.com/?s=action&apikey=${API_KEY}`
+          `https://www.omdbapi.com/?s=action&apikey=${API_KEY}`
         );
         setMovies(response.data.Search || []);
       } catch (error) {
