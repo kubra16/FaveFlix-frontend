@@ -38,13 +38,16 @@ FaveFlix is a web application that allows users to search for movies, create per
      npm install
      ```
    - Create a `.env` file with the following variable:
+
      ```
      REACT_APP_BASE_URL=http://localhost:5000/
-     ```
      REACT_APP_API_KEY=your_omdb_api_key
      ```
 
      ```
+
+     ```
+
    - Start the frontend development server:
      ```bash
      npm start
