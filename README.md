@@ -22,10 +22,16 @@ FaveFlix is a web application that allows users to search for movies, create per
 
 1. **Clone the backend repository :**
 
-   ```bash
-   git clone https://github.com/kubra16/FaveFlix-backend.git
-   cd FaveFlix-backend
-   ```
+- Link for backend repository
+
+```bash
+  https://github.com/kubra16/FaveFlix-backend
+```
+
+```bash
+git clone https://github.com/kubra16/FaveFlix-backend.git
+cd FaveFlix-backend
+```
 
 2. **Backend Setup:**
 
@@ -47,10 +53,16 @@ FaveFlix is a web application that allows users to search for movies, create per
 
 3. **Clone the frontend repository:**
 
-   ```bash
-   git clone https://github.com/kubra16/FaveFlix-frontend.git
-   cd FaveFlix-frontend
-   ```
+   - Link for frontend repository
+
+```bash
+  https://github.com/kubra16/FaveFlix-frontend
+```
+
+```bash
+git clone https://github.com/kubra16/FaveFlix-frontend.git
+cd FaveFlix-frontend
+```
 
 4. **Frontend Setup:**
 
@@ -75,3 +87,9 @@ npm install
 5. **Access the application:**
 
 - Open your browser and go to `http://localhost:3000`
+
+6. **Access the deployed application:**
+
+```bash
+  https://fave-flix-frontend.vercel.app/
+```
