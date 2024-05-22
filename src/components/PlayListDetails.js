@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MovieCard from "./MovieCard";
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { UserState } from "../Context/UserProvider";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -29,21 +29,53 @@ const PlayListDetails = () => {
 
   return (
     <>
-      {movie.isPublic && movie.user === user._id ? (
+      {movie.isPublic ? (
         <div style={{ padding: "2rem" }}>
           <h1>{movie.name}</h1>
           <Grid container spacing={3}>
-            {movieList.map((list) => (
-              <Grid item key={list.imdbID} xs={12} sm={6} md={4}>
-                <MovieCard
-                  isPlaylist={true}
-                  movie={list}
-                  // onClick={() => handleOpenModal(list)}
-                  // handleAddtoList={() => handleAddtoList(list)}
-                />
-              </Grid>
-            ))}
+            {movieList.length === 0 ? (
+              <Typography variant="h4" component="h1" gutterBottom>
+                Your playlist is empty
+              </Typography>
+            ) : (
+              <Box
+                sx={{
+                  padding: 12,
+                  width: "80%",
+                  margin: "auto",
+                  textAlign: "center",
+                }}
+              >
+                <Grid container spacing={3}>
+                  {movieList.map((list) => (
+                    <Grid item key={list.imdbID} xs={12} sm={6} md={4}>
+                      <MovieCard isPlaylist={true} movie={list} />
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+            )}
           </Grid>
+        </div>
+      ) : user && movie.user === user._id ? (
+        <div style={{ padding: "2rem" }}>
+          <h1>{movie.name}</h1>
+          <Box
+            sx={{
+              padding: 12,
+              width: "80%",
+              margin: "auto",
+              textAlign: "center",
+            }}
+          >
+            <Grid container spacing={3}>
+              {movieList.map((list) => (
+                <Grid item key={list.imdbID} xs={12} sm={6} md={4}>
+                  <MovieCard isPlaylist={true} movie={list} />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
         </div>
       ) : (
         <Typography variant="h4" component="h1" gutterBottom>

@@ -7,6 +7,7 @@ import MovieModal from "../components/MovieModal";
 import axios from "axios";
 import { UserState } from "../Context/UserProvider";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Playlist = () => {
@@ -27,13 +28,15 @@ const Playlist = () => {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
+      marginTop: "5rem",
     },
+
     playlistItem: {
       display: "flex",
       flexDirection: "row",
-      alignItems: "center",
       justifyContent: "center",
-      width: "50%",
+      alignItems: "center",
+      width: "70%",
       padding: theme.spacing(2),
       backgroundColor: theme.palette.background.paper,
       borderRadius: theme.shape.borderRadius,
@@ -43,6 +46,7 @@ const Playlist = () => {
         backgroundColor: theme.palette.action.hover,
       },
     },
+
     playlistName: {
       flexGrow: 1,
       color: theme.palette.text.primary,
@@ -55,25 +59,24 @@ const Playlist = () => {
   const navigate = useNavigate();
   const classes = useStyles();
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        };
-        const response = await axios.get(
-          `${BASE_URL}api/playlist/${user?._id}`,
-          config
-        );
-        console.log(response);
-        setPlaylist(response.data || []);
-      } catch (error) {
-        console.error("Error fetching movies:", error);
-      }
-    };
+  const fetchMovies = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const response = await axios.get(
+        `${BASE_URL}api/playlist/${user?._id}`,
+        config
+      );
+      setPlaylist(response.data || []);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchMovies();
   }, [user]);
 
@@ -88,52 +91,139 @@ const Playlist = () => {
     navigate(playlistURL);
   };
 
-  return (
-    <Box className={classes.container}>
-      <Grid container spacing={3}>
-        {playList.map((list) => (
-          <Grid item xs={12} key={list._id}>
-            <Box
-              className={classes.playlistItem}
-              onClick={() => handlePlaylistSelect(list)}
-            >
-              <Typography variant="h5" className={classes.playlistName}>
-                {list.name}
-              </Typography>
-              {/* {list.isPublic && ( */}
-              <Button
-                style={theme.components.MuiButton.containedList}
-                className={classes.copyButton}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  copyPlaylistLink(list._id);
-                }}
-              >
-                Copy link
-              </Button>
-              {/* )} */}
+  const handleMakePublic = async (list) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const response = await axios.put(
+        `${BASE_URL}api/playlist/${list}/public`,
+        null,
+        config
+      );
+      toast.success("Playlist marked as public!");
+      fetchMovies();
+    } catch (err) {
+      console.error("Error marking playlist as public:", err);
+      toast.error("Something went wrong. Please try again later.");
+    }
+  };
+  const handleMakePrivate = async (list) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const response = await axios.put(
+        `${BASE_URL}api/playlist/${list}/private`,
+        null,
+        config
+      );
+      toast.success("Playlist marked as private!");
+      fetchMovies();
+    } catch (err) {
+      console.error("Error marking playlist as private:", err);
+      toast.error("Something went wrong. Please try again later.");
+    }
+  };
 
-              {console.log(list.isPublic)}
-              <Button
-                style={theme.components.MuiButton.containedList}
-                className={classes.copyButton}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  copyPlaylistLink(list._id);
-                }}
+  const handleDeletePlayList = async (list) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const response = await axios.delete(
+        `${BASE_URL}api/playlist/${list}/delete`,
+        config
+      );
+      toast.success("Playlist deleted successfully!");
+      fetchMovies();
+    } catch (err) {
+      console.error("Error deleting playlist:", err);
+      toast.error("Something went wrong. Please try again later.");
+    }
+  };
+
+  return (
+    <div>
+      <Box className={classes.container}>
+        <Grid container spacing={3}>
+          {playList.map((list) => (
+            <Grid item xs={12} key={list._id}>
+              <Box
+                className={classes.playlistItem}
+                onClick={() => handlePlaylistSelect(list)}
               >
-                Make it public
-              </Button>
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-      <MovieModal
-      // isOpen={isModalOpen}
-      // onClose={handleCloseModal}
-      // movie={selectedMovie}
-      />
-    </Box>
+                <Typography
+                  style={theme.typography.h5}
+                  className={classes.playlistName}
+                >
+                  {list.name}
+                </Typography>
+                {list.isPublic && (
+                  <Button
+                    style={theme.components.MuiButton.containedList}
+                    className={classes.copyButton}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      copyPlaylistLink(list._id);
+                    }}
+                  >
+                    Copy link
+                  </Button>
+                )}
+                {list.isPublic === false ? (
+                  <Button
+                    style={theme.components.MuiButton.containedList}
+                    className={classes.copyButton}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleMakePublic(list._id);
+                    }}
+                  >
+                    Make it public
+                  </Button>
+                ) : (
+                  <Button
+                    style={theme.components.MuiButton.containedList}
+                    className={classes.copyButton}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleMakePrivate(list._id);
+                    }}
+                  >
+                    Make it private
+                  </Button>
+                )}
+                <Button
+                  style={
+                    theme.components.MuiButton.styleOverrides
+                      .containedListDelete
+                  }
+                  // className={classes.copyButton}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeletePlayList(list._id);
+                  }}
+                >
+                  Delete
+                </Button>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+        <MovieModal
+        // isOpen={isModalOpen}
+        // onClose={handleCloseModal}
+        // movie={selectedMovie}
+        />
+      </Box>
+    </div>
   );
 };
 

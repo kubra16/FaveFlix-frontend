@@ -10,30 +10,26 @@ import {
   createTheme,
 } from "@mui/material";
 import { grey, purple } from "@mui/material/colors";
-import ImagePlaceholder from "./ImagePlaceholder";
 import { useTheme } from "@emotion/react";
 import { UserState } from "../Context/UserProvider";
 
 const MovieCard = ({ isPlaylist, movie, onClick, handleAddtoList }) => {
   const theme = useTheme();
   const { user } = UserState();
-  console.log(user);
+  // console.log(user);
 
   return (
     <div>
       <Paper elevation={8}>
         <div onClick={onClick}>
           <Card>
-            {movie.poster || movie.Poster ? (
-              <CardMedia
-                component="img"
-                height="240"
-                image={movie.Poster || movie.poster}
-                alt={movie.Title || movie.title}
-              />
-            ) : (
-              <ImagePlaceholder />
-            )}
+            <CardMedia
+              component="img"
+              height="240"
+              image={movie.Poster || movie.poster}
+              alt={movie.Title || movie.title}
+            />
+
             <CardContent>
               <Typography gutterBottom variant="h6" component="div">
                 {movie.Title || movie.title}

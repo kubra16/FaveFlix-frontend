@@ -67,7 +67,7 @@ const Register = () => {
       <Grid container spacing={2} justifyContent="center">
         <Grid item xs={12}>
           <Typography variant="h4" align="center" gutterBottom>
-            Registration
+            Register
           </Typography>
         </Grid>
         <Grid item xs={12}>

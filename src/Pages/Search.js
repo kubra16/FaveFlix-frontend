@@ -7,6 +7,7 @@ import axios from "axios";
 import SearchBar from "../components/SearchBar";
 import CreatePlayListModal from "../components/CreatePlayListModal";
 import { UserState } from "../Context/UserProvider";
+import { toast } from "react-toastify";
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const Search = () => {
@@ -43,6 +44,10 @@ const Search = () => {
         `https://www.omdbapi.com/?s=${search}&apikey=${API_KEY}`
       );
       setSearchMovies(response.data.Search || []);
+      console.log(response);
+      if (response.data.Error) {
+        toast.error("Movie not found");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -57,7 +62,7 @@ const Search = () => {
   };
 
   const handleAddtoList = async (movie) => {
-    console.log(movie, "movie");
+    // console.log(movie, "movie");
     setSelectedMovie(movie);
     setCreateModal(true);
     try {
@@ -96,8 +101,9 @@ const Search = () => {
         FormData,
         config
       );
+      toast.success("Created new playlist!");
       setPlayListName("");
-      handleAddtoList();
+      setCreateModal(false);
     } catch (err) {
       console.log(err);
     }
@@ -119,6 +125,7 @@ const Search = () => {
       const response = await axios
         .post(`${BASE_URL}api/playlist/${playlistId}/movies`, newMovie, config)
         .then((response) => setCreateModal(false));
+      toast.success("Added movie to your playlist!");
     } catch (err) {
       console.log(err);
     }
@@ -131,36 +138,43 @@ const Search = () => {
         onClick={handleSearchMovie}
         setSearch={setSearch}
       />
-      {/* <Box sx={{ padding: 2 }}> */}
-      <Grid container spacing={3}>
-        {SearchMovies.map((movie) => (
-          <Grid item key={movie.imdbID} xs={12} sm={6} md={4}>
-            <MovieCard
-              movie={movie}
-              onClick={() => handleOpenModal(movie)}
-              handleAddtoList={() => handleAddtoList(movie)}
-              selected={movie}
-            />
-          </Grid>
-        ))}
-      </Grid>
-      <MovieModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        movie={selectedMovie}
-      />
-      <CreatePlayListModal
-        isOpen={isCreateModal}
-        onClose={handleCreateClose}
-        playList={playList}
-        setPlaylist={setPlaylist}
-        playlistName={playlistName}
-        setPlayListName={setPlayListName}
-        handleAddtoPlaylist={handleAddtoPlaylist}
-        handleMoviesToPlaylist={handleMoviesToPlaylist}
-        movie={selectedMovie}
-      />
-      {/* </Box> */}
+      <Box
+        sx={{
+          padding: 12,
+          width: "80%",
+          margin: "auto",
+          textAlign: "center",
+        }}
+      >
+        <Grid container spacing={3}>
+          {SearchMovies.map((movie) => (
+            <Grid item key={movie.imdbID} xs={12} sm={6} md={4}>
+              <MovieCard
+                movie={movie}
+                onClick={() => handleOpenModal(movie)}
+                handleAddtoList={() => handleAddtoList(movie)}
+                selected={movie}
+              />
+            </Grid>
+          ))}
+        </Grid>
+        <MovieModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          movie={selectedMovie}
+        />
+        <CreatePlayListModal
+          isOpen={isCreateModal}
+          onClose={handleCreateClose}
+          playList={playList}
+          setPlaylist={setPlaylist}
+          playlistName={playlistName}
+          setPlayListName={setPlayListName}
+          handleAddtoPlaylist={handleAddtoPlaylist}
+          handleMoviesToPlaylist={handleMoviesToPlaylist}
+          movie={selectedMovie}
+        />
+      </Box>
     </div>
   );
 };

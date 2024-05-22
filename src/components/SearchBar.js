@@ -51,7 +51,7 @@ const SearchBar = ({ value, onClick, setSearch }) => {
         }}
       >
         <Typography style={theme.typography.h2} gutterBottom>
-          Create neww playList
+          Search your movie
         </Typography>
       </div>
 

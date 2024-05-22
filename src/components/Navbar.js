@@ -4,29 +4,38 @@ import {
   Container,
   Toolbar,
   Typography,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "./Styles.module.css";
 import ThemeToggleButton from "./ThemeToggleButton";
 import { UserState } from "../Context/UserProvider";
+import { useLocation } from "react-router-dom";
 
 const Navbar = ({ themeMode, toggleTheme }) => {
+  const location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
   const { setUser } = UserState();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
   const logout = () => {
     localStorage.removeItem("userInfo");
     setUser(null);
     navigate("/");
-    window.location.reload();
+    // window.location.reload();
   };
   return (
     <AppBar position="fixed" className={styles.navbar}>
-      <Container>
-        <Toolbar>
+      <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <LiveTvIcon
             sx={{
               display: { xs: "none", md: "flex" },
@@ -38,47 +47,59 @@ const Navbar = ({ themeMode, toggleTheme }) => {
           <Typography variant="h5" sx={{ color: theme.palette.text.primary }}>
             FaveFlix
           </Typography>
-          {/* <div style={{ display: "flex", alignItems: "center" }}> */}
-          <Link
+          <NavLink
             to="/home"
             style={{
               textDecoration: "none",
               color: theme.palette.text.primary,
               marginLeft: "1rem",
+              borderBottom: "2px solid",
+              borderColor:
+                location.pathname === "/home"
+                  ? theme.palette.purple.main
+                  : "transparent",
             }}
           >
             <Typography variant="h6">Home</Typography>
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/search"
             style={{
               textDecoration: "none",
               color: theme.palette.text.primary,
               marginLeft: "1rem",
+              borderBottom: "2px solid",
+              borderColor:
+                location.pathname === "/search"
+                  ? theme.palette.purple.main
+                  : "transparent",
             }}
           >
             <Typography variant="h6">Search</Typography>
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/playlist"
             style={{
               textDecoration: "none",
               color: theme.palette.text.primary,
               marginLeft: "1rem",
+              borderBottom: "2px solid",
+              borderColor:
+                location.pathname === "/playlist"
+                  ? theme.palette.purple.main
+                  : "transparent",
             }}
           >
             <Typography variant="h6">My Playlist</Typography>
-          </Link>
-          <div style={{ marginLeft: "1rem" }}>
-            <ThemeToggleButton
-              themeMode={themeMode}
-              toggleTheme={toggleTheme}
-            />
-          </div>
-          <Button onClick={logout}>Logout</Button>
-          {/* </div> */}
-        </Toolbar>
-      </Container>
+          </NavLink>
+        </div>
+        <div>
+          <ThemeToggleButton themeMode={themeMode} toggleTheme={toggleTheme} />
+          <Button onClick={logout} style={{ marginLeft: "1rem" }}>
+            Logout
+          </Button>
+        </div>
+      </Toolbar>
     </AppBar>
   );
 };

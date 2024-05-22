@@ -136,11 +136,22 @@ const Home = () => {
   return (
     <div>
       {/* <Navbar /> */}
-      <Box sx={{ padding: 2 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Home
-        </Typography>
-        <Grid container spacing={3}>
+      <Box
+        sx={{
+          padding: 12,
+          width: "80%",
+          margin: "auto",
+          textAlign: "center",
+        }}
+      >
+        <Typography variant="h5">Recomendations</Typography>
+        <Grid
+          container
+          spacing={4}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           {movies.map((movie) => (
             <Grid item key={movie.imdbID} xs={12} sm={6} md={4}>
               <MovieCard

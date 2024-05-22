@@ -1,5 +1,5 @@
 // lightTheme.js
-import { purple } from "@mui/material/colors";
+import { purple, red } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 
 const lightTheme = createTheme({
@@ -7,6 +7,9 @@ const lightTheme = createTheme({
     mode: "light",
     primary: {
       main: "#1976d2",
+    },
+    purple: {
+      main: purple[700],
     },
     secondary: {
       main: "#dc004e",
@@ -21,15 +24,32 @@ const lightTheme = createTheme({
   },
   typography: {
     h1: {
+      fontFamily: "Raleway, Arial",
       fontSize: "1rem",
       fontWeight: 500,
       color: "#333",
       borderBottom: ".3 rem purple",
+      "@media (max-width: 600px)": {
+        width: ".0rem",
+      },
     },
     h2: {
+      fontFamily: "Raleway, Arial",
       fontSize: "1.5rem",
       fontWeight: 600,
       color: "#333",
+      "@media (max-width: 600px)": {
+        width: ".0rem",
+      },
+    },
+    h5: {
+      fontFamily: "Raleway, Arial",
+      fontSize: "1.5rem",
+      fontWeight: 600,
+      color: "#333",
+      "@media (max-width: 600px)": {
+        width: ".0rem",
+      },
     },
   },
 
@@ -66,6 +86,10 @@ const lightTheme = createTheme({
           marginLeft: ".5rem",
           borderRadius: "10px",
           marginTop: "1rem",
+          // width: "150px",
+          "@media (max-width: 600px)": {
+            width: "100px",
+          },
         },
         containedPrimary: {
           color: "white",
@@ -80,6 +104,14 @@ const lightTheme = createTheme({
           backgroundColor: purple[500],
           "&:hover": {
             backgroundColor: purple[700],
+          },
+          width: "5rem",
+        },
+        containedListDelete: {
+          color: "white",
+          backgroundColor: red[500],
+          "&:hover": {
+            backgroundColor: red[700],
           },
           width: "5rem",
         },

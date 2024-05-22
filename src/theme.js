@@ -1,5 +1,5 @@
 // theme.js
-import { grey, purple } from "@mui/material/colors";
+import { grey, purple, red } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 
 const darkTheme = createTheme({
@@ -7,6 +7,9 @@ const darkTheme = createTheme({
     mode: "dark",
     primary: {
       main: "#90caf9",
+    },
+    purple: {
+      main: purple[700],
     },
     secondary: {
       main: "#f48fb1",
@@ -19,14 +22,18 @@ const darkTheme = createTheme({
       primary: "#ffffff",
     },
   },
+
   typography: {
     h1: {
+      fontFamily: "Raleway, Arial",
+
       fontSize: "1rem",
       fontWeight: 500,
       color: "#fff",
       borderBottom: ".3 rem purple",
     },
     h2: {
+      fontFamily: "Raleway, Arial",
       fontSize: "1.5rem",
       fontWeight: 600,
       color: "#FFF",
@@ -57,7 +64,7 @@ const darkTheme = createTheme({
           "&:hover": {
             backgroundColor: purple[700],
           },
-
+          marginLeft: ".5rem",
           borderRadius: "10px",
           marginTop: "1rem",
         },
@@ -68,6 +75,14 @@ const darkTheme = createTheme({
             backgroundColor: purple[700],
           },
           width: "100%",
+        },
+        containedListDelete: {
+          color: "white",
+          backgroundColor: red[500],
+          "&:hover": {
+            backgroundColor: red[700],
+          },
+          width: "5rem",
         },
         containedSecondary: {
           color: "white",
